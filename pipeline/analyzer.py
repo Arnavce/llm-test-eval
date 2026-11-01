@@ -622,6 +622,22 @@ def _load_complexity_table(frame: pd.DataFrame) -> list[dict[str, Any]] | None:
     return rows or None
 
 
+def _manifest_provenance() -> dict[str, Any] | None:
+    """Read the generator manifest so the report can state its provenance."""
+    candidate = Path("generated_tests/manifest.json")
+    try:
+        payload = json.loads(candidate.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return None
+    if not isinstance(payload, dict):
+        return None
+    return {
+        "mode": payload.get("mode", "unknown"),
+        "provider": payload.get("provider", "unknown"),
+        "model": payload.get("model", "unknown"),
+    }
+
+
 def build_report(
     frame: pd.DataFrame,
     summary: pd.DataFrame,
@@ -757,11 +773,24 @@ def build_report(
 
     lines.append("## Caveats")
     lines.append("")
-    lines.append(
-        "- The mock corpus is synthetic and deterministic; absolute scores are "
-        "illustrative and should be replaced by live-API runs (`--api`) for "
-        "publication."
-    )
+    provenance = _manifest_provenance()
+    if provenance and provenance.get("mode") == "api":
+        lines.append(
+            f"- Generated suites were produced by the live `{provenance['provider']}` "
+            f"API using model `{provenance['model']}`; the corpus is not synthetic."
+        )
+        if not generated.empty:
+            passed = int(generated["execution_success"].sum())
+            lines.append(
+                f"- Only **{passed}/{len(generated)}** generated suites executed "
+                "cleanly, so mutation scores exist for that subset only."
+            )
+    else:
+        lines.append(
+            "- The corpus is synthetic (deterministic mock generator); absolute "
+            "scores are illustrative and should be replaced by live-API runs "
+            "(`--api`) for publication."
+        )
     lines.append(
         "- Mutation scores are only defined for suites that pass cleanly, because "
         "a failing suite would otherwise score high for the wrong reason."

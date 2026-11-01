@@ -29,47 +29,47 @@ Coverage and mutation means are computed over suites where that metric is define
 
 | Metric | Generated (mean) | Human baseline (mean) |
 | --- | ---: | ---: |
-| line_coverage | 60.34 | 99.35 |
-| branch_coverage | 49.59 | 98.85 |
-| mutation_score | 0.28 | 0.76 |
-| total_tests | 3.30 | 35.33 |
-| assertions_per_test | 1.86 | 1.27 |
-| execution_time_s | 0.27 | 0.36 |
+| line_coverage | 99.60 | 99.35 |
+| branch_coverage | 99.44 | 98.85 |
+| mutation_score | 0.96 | 0.76 |
+| total_tests | 62.40 | 35.33 |
+| assertions_per_test | 1.23 | 1.27 |
+| execution_time_s | 0.40 | 0.36 |
 
-- Collection success rate (generated): **80.0%**
-- Execution success rate (generated): **60.0%**
+- Collection success rate (generated): **100.0%**
+- Execution success rate (generated): **43.3%**
 
 ## Research questions
 
 ### RQ2 - Does line coverage predict mutation score?
 
-Spearman rho = **+0.858** (p = 0.0000, n = 18); interpretation: very strong positive.
+Spearman rho = **+0.608** (p = 0.0274, n = 13); interpretation: strong positive.
 
 ### RQ3 - Does branch coverage predict mutation score?
 
-Spearman rho = **+0.911** (p = 0.0000, n = 18); interpretation: very strong positive.
+Spearman rho = **+0.608** (p = 0.0274, n = 13); interpretation: strong positive.
 
 ### RQ5a - Does module complexity predict execution success?
 
-Spearman rho = **+0.000** (p = 1.0000, n = 30); interpretation: no monotonic association.
+Spearman rho = **-0.532** (p = 0.0025, n = 30); interpretation: moderate negative.
 
 ### RQ5b - Does module complexity predict mutation score?
 
-Spearman rho = **+0.082** (p = 0.7472, n = 18); interpretation: negligible positive.
+Spearman rho = **-0.574** (p = 0.0400, n = 13); interpretation: moderate negative.
 
 ### EXTRA1 - Does the number of tests predict mutation score?
 
-Spearman rho = **+0.701** (p = 0.0012, n = 18); interpretation: strong positive.
+Spearman rho = **-0.250** (p = 0.4100, n = 13); interpretation: weak negative.
 
 ### EXTRA2 - Do assertions per test predict mutation score?
 
-Spearman rho = **+0.492** (p = 0.0380, n = 18); interpretation: moderate positive.
+Spearman rho = **-0.572** (p = 0.0413, n = 13); interpretation: moderate negative.
 
 ## Failure taxonomy (RQ6)
 
-- `None`: 24
-- `CollectionError`: 6
-- `AssertionFailure`: 6
+- `None`: 19
+- `AssertionFailure`: 14
+- `RuntimeError`: 3
 
 ## Figures
 
@@ -81,6 +81,7 @@ Spearman rho = **+0.492** (p = 0.0380, n = 18); interpretation: moderate positiv
 
 ## Caveats
 
-- The mock corpus is synthetic and deterministic; absolute scores are illustrative and should be replaced by live-API runs (`--api`) for publication.
+- Generated suites were produced by the live `deepseek` API using model `deepseek-chat`; the corpus is not synthetic.
+- Only **13/30** generated suites executed cleanly, so mutation scores exist for that subset only.
 - Mutation scores are only defined for suites that pass cleanly, because a failing suite would otherwise score high for the wrong reason.
 - Spearman p-values with $n < 10$ are indicative only; the pipeline reports them transparently rather than gating on significance.

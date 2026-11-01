@@ -1,223 +1,425 @@
 module,suite,run_id,generation_mode,test_file,collection_success,execution_success,total_tests,passed,failed,errors,skipped,execution_time_s,line_coverage,branch_coverage,combined_coverage,avg_complexity,max_complexity,total_mutants,killed_mutants,survived_mutants,timeout_mutants,invalid_mutants,mutation_score,failure_category,tests_per_kloc,assertions_per_test,generated_loc,error_message,notes
-m1_arithmetic,gen_1,1,generated,generated_tests/m1_arithmetic_gen_1.py,True,True,5,5,0,0,0,0.3346,100.0,100.0,100.0,1.6667,3,10,8,2,0,0,0.8,,,2.2,39,,
-m1_arithmetic,gen_2,2,generated,generated_tests/m1_arithmetic_gen_2.py,True,True,3,3,0,0,0,0.3239,45.4545,25.0,45.4545,1.6667,3,10,1,9,0,0,0.1,,,1.6667,27,,
-m1_arithmetic,gen_3,3,generated,generated_tests/m1_arithmetic_gen_3.py,True,True,2,2,0,0,0,0.3182,54.5455,37.5,54.5455,1.6667,3,10,2,8,0,0,0.2,,,2.0,22,,
-m1_arithmetic,gen_4,4,generated,generated_tests/m1_arithmetic_gen_4.py,True,False,6,5,1,0,0,0.3492,100.0,100.0,100.0,1.6667,3,0,0,0,0,0,,AssertionFailure,,2.0,44,".....F                                                                   [100%]
+m1_arithmetic,gen_1,1,generated,generated_tests/m1_arithmetic_gen_1.py,True,True,36,36,0,0,0,0.4325,100.0,100.0,100.0,1.6667,3,10,10,0,0,0,1.0,None,,1.0,136,,
+m1_arithmetic,gen_2,2,generated,generated_tests/m1_arithmetic_gen_2.py,True,True,37,37,0,0,0,0.3737,100.0,100.0,100.0,1.6667,3,10,10,0,0,0,1.0,None,,1.0,140,,
+m1_arithmetic,gen_3,3,generated,generated_tests/m1_arithmetic_gen_3.py,True,True,36,36,0,0,0,0.3713,100.0,100.0,100.0,1.6667,3,10,10,0,0,0,1.0,None,,1.0,136,,
+m1_arithmetic,gen_4,4,generated,generated_tests/m1_arithmetic_gen_4.py,True,False,38,37,1,0,0,0.4704,100.0,100.0,100.0,1.6667,3,0,0,0,0,0,,AssertionFailure,,1.0,143,".............................F........                                   [100%]
 =================================== FAILURES ===================================
-___________________ test_generated_expectation_is_incorrect ____________________
+________________ TestIsClose.test_exactly_at_default_tolerance _________________
 
-    def test_generated_expectation_is_incorrect() -> None:
-        """"""A plausible-looking assertion that is internally inconsistent.""""""
->       assert 2 + 2 == 5
-E       assert (2 + 2) == 5
+self = <m1_arithmetic_gen_4.TestIsClose object at 0x108c01790>
 
-generated_tests/m1_arithmetic_gen_4.py:44: AssertionError
+    def test_exactly_at_default_tolerance(self):
+>       assert is_close(1.0, 1.0 + DEFAULT_TOLERANCE) is True
+E       assert False is True
+E        +  where False = is_close(1.0, (1.0 + 1e-09))
+
+generated_tests/m1_arithmetic_gen_4.py:117: AssertionError
 =========================== short test summary info ============================
-FAILED generated_tests/m1_arithmetic_gen_4.py::test_generated_expectation_is_incorrect
-1 failed, 5 passed in 0.02s",mutation testing skipped: suite did not pass cleanly
-m1_arithmetic,gen_5,5,generated,generated_tests/m1_arithmetic_gen_5.py,False,False,0,0,0,0,0,0.0,,,,1.6667,3,0,0,0,0,0,,CollectionError,,,44,"==================================== ERRORS ====================================
-___________ ERROR collecting generated_tests/m1_arithmetic_gen_5.py ____________
-.venv/lib/python3.12/site-packages/_pytest/python.py:528: in importtestmodule
-    mod = import_path(
-.venv/lib/python3.12/site-packages/_pytest/pathlib.py:640: in import_path
-    importlib.import_module(module_name)
-../../../../.dsh/dsh-runtimes/dsh-primary-runtime/dependencies/python/lib/python3.12/importlib/__init__.py:90: in import_module
-    return _bootstrap._gcd_import(name[level:], package, level)
-           ^^^^^^^^^^^^^^^^^^^
-... [706 chars elided] ...
-endencies/python/lib/python3.12/ast.py:52: in parse
-    return compile(source, filename, mode, flags,
-E     File ""generated_tests/m1_arithmetic_gen_5.py"", line 43
-E       def test_generated_incomplete_case(:
-E                                          ^
-E   SyntaxError: invalid syntax
-=========================== short test summary info ============================
-ERROR generated_tests/m1_arithmetic_gen_5.py
-!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
-no tests collected, 1 error in 0.09s",
-m2_string_utils,gen_1,1,generated,generated_tests/m2_string_utils_gen_1.py,True,True,5,5,0,0,0,0.3244,89.4737,75.0,89.4737,2.0,4,8,4,4,0,0,0.5,,,1.8,37,,
-m2_string_utils,gen_2,2,generated,generated_tests/m2_string_utils_gen_2.py,True,True,3,3,0,0,0,0.3172,52.6316,37.5,52.6316,2.0,4,8,1,7,0,0,0.125,,,1.3333,27,,
-m2_string_utils,gen_3,3,generated,generated_tests/m2_string_utils_gen_3.py,True,True,2,2,0,0,0,0.3292,42.1053,25.0,42.1053,2.0,4,8,1,7,0,0,0.125,,,1.0,20,,
-m2_string_utils,gen_4,4,generated,generated_tests/m2_string_utils_gen_4.py,True,False,6,5,1,0,0,0.3356,89.4737,75.0,89.4737,2.0,4,0,0,0,0,0,,AssertionFailure,,1.6667,42,".....F                                                                   [100%]
+FAILED generated_tests/m1_arithmetic_gen_4.py::TestIsClose::test_exactly_at_default_tolerance
+1 failed, 37 passed in 0.04s",mutation testing skipped: suite did not pass cleanly
+m1_arithmetic,gen_5,5,generated,generated_tests/m1_arithmetic_gen_5.py,True,True,37,37,0,0,0,0.3655,100.0,100.0,100.0,1.6667,3,10,10,0,0,0,1.0,None,,1.0,139,,
+m2_string_utils,gen_1,1,generated,generated_tests/m2_string_utils_gen_1.py,True,True,48,48,0,0,0,0.4418,100.0,100.0,100.0,2.0,4,8,8,0,0,0,1.0,None,,1.0417,238,,
+m2_string_utils,gen_2,2,generated,generated_tests/m2_string_utils_gen_2.py,True,True,43,43,0,0,0,0.369,100.0,100.0,100.0,2.0,4,8,8,0,0,0,1.0,None,,1.186,171,,
+m2_string_utils,gen_3,3,generated,generated_tests/m2_string_utils_gen_3.py,True,True,44,44,0,0,0,0.3819,100.0,100.0,100.0,2.0,4,8,8,0,0,0,1.0,None,,1.1818,174,,
+m2_string_utils,gen_4,4,generated,generated_tests/m2_string_utils_gen_4.py,True,True,39,39,0,0,0,0.41,100.0,100.0,100.0,2.0,4,8,7,1,0,0,0.875,None,,1.1795,157,,
+m2_string_utils,gen_5,5,generated,generated_tests/m2_string_utils_gen_5.py,True,True,45,45,0,0,0,0.3935,100.0,100.0,100.0,2.0,4,8,8,0,0,0,1.0,None,,1.2,178,,
+m3_validation,gen_1,1,generated,generated_tests/m3_validation_gen_1.py,True,True,36,36,0,0,0,0.3598,98.3607,98.0,98.3607,5.5714,11,29,28,1,0,0,0.9655,None,,2.0278,262,,
+m3_validation,gen_2,2,generated,generated_tests/m3_validation_gen_2.py,True,False,115,114,1,0,0,0.4117,100.0,100.0,100.0,5.5714,11,0,0,0,0,0,,AssertionFailure,,1.2368,363,"..........................................................F............. [ 62%]
+...........................................                              [100%]
 =================================== FAILURES ===================================
-___________________ test_generated_expectation_is_incorrect ____________________
+_____________ test_validate_phone_plus_not_at_start[+1+234567890] ______________
 
-    def test_generated_expectation_is_incorrect() -> None:
-        """"""A plausible-looking assertion that is internally inconsistent.""""""
->       assert 2 + 2 == 5
-E       assert (2 + 2) == 5
+phone = '+1+234567890'
 
-generated_tests/m2_string_utils_gen_4.py:42: AssertionError
+    @pytest.mark.parametrize(
+        ""phone"",
+        [
+            ""123+4567890"",
+            ""1+234567890"",
+            ""1234567890+"",
+            ""+1+234567890"",
+        ],
+    )
+    def test_validate_phone_plus_not_at_start(phone):
+>       with pytest.raises(
+            InvalidPhoneError, match=""a plus prefix is only allowed at the start""
+        ):
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'a plus prefix is only allowed at the start'
+E         Actual message: ""invalid phone number: '+1+234567890'""
+
+generated_tests/m3_validation_gen_2.py:194: AssertionError
 =========================== short test summary info ============================
-FAILED generated_tests/m2_string_utils_gen_4.py::test_generated_expectation_is_incorrect
-1 failed, 5 passed in 0.02s",mutation testing skipped: suite did not pass cleanly
-m2_string_utils,gen_5,5,generated,generated_tests/m2_string_utils_gen_5.py,False,False,0,0,0,0,0,0.0,,,,2.0,4,0,0,0,0,0,,CollectionError,,,42,"==================================== ERRORS ====================================
-__________ ERROR collecting generated_tests/m2_string_utils_gen_5.py ___________
-.venv/lib/python3.12/site-packages/_pytest/python.py:528: in importtestmodule
-    mod = import_path(
-.venv/lib/python3.12/site-packages/_pytest/pathlib.py:640: in import_path
-    importlib.import_module(module_name)
-../../../../.dsh/dsh-runtimes/dsh-primary-runtime/dependencies/python/lib/python3.12/importlib/__init__.py:90: in import_module
-    return _bootstrap._gcd_import(name[level:], package, level)
-           ^^^^^^^^^^^^^^^^^^^
-... [710 chars elided] ...
-ncies/python/lib/python3.12/ast.py:52: in parse
-    return compile(source, filename, mode, flags,
-E     File ""generated_tests/m2_string_utils_gen_5.py"", line 41
-E       def test_generated_incomplete_case(:
-E                                          ^
-E   SyntaxError: invalid syntax
-=========================== short test summary info ============================
-ERROR generated_tests/m2_string_utils_gen_5.py
-!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
-no tests collected, 1 error in 0.09s",
-m3_validation,gen_1,1,generated,generated_tests/m3_validation_gen_1.py,True,True,5,5,0,0,0,0.3241,70.4918,64.0,70.4918,5.5714,11,29,18,11,0,0,0.6207,,,2.2,40,,
-m3_validation,gen_2,2,generated,generated_tests/m3_validation_gen_2.py,True,True,3,3,0,0,0,0.3292,56.5574,48.0,56.5574,5.5714,11,29,11,18,0,0,0.3793,,,1.6667,27,,
-m3_validation,gen_3,3,generated,generated_tests/m3_validation_gen_3.py,True,True,2,2,0,0,0,0.3298,11.4754,0.0,11.4754,5.5714,11,29,0,29,0,0,0.0,,,1.5,20,,
-m3_validation,gen_4,4,generated,generated_tests/m3_validation_gen_4.py,True,False,6,5,1,0,0,0.3436,70.4918,64.0,70.4918,5.5714,11,0,0,0,0,0,,AssertionFailure,,2.0,45,".....F                                                                   [100%]
+FAILED generated_tests/m3_validation_gen_2.py::test_validate_phone_plus_not_at_start[+1+234567890]
+1 failed, 114 passed in 0.05s",mutation testing skipped: suite did not pass cleanly
+m3_validation,gen_3,3,generated,generated_tests/m3_validation_gen_3.py,True,False,52,51,1,0,0,0.3921,96.7213,96.0,96.7213,5.5714,11,0,0,0,0,0,,AssertionFailure,,1.2692,300,".......F............................................                     [100%]
 =================================== FAILURES ===================================
-___________________ test_generated_expectation_is_incorrect ____________________
+_________________________ test_validate_email_too_long _________________________
 
-    def test_generated_expectation_is_incorrect() -> None:
-        """"""A plausible-looking assertion that is internally inconsistent.""""""
->       assert 2 + 2 == 5
-E       assert (2 + 2) == 5
+    def test_validate_email_too_long():
+        local = ""a"" * 240
+        email = local + ""@example.com""
+>       assert len(email) > 254
+E       AssertionError: assert 252 > 254
+E        +  where 252 = len('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@example.com')
 
-generated_tests/m3_validation_gen_4.py:45: AssertionError
+generated_tests/m3_validation_gen_3.py:60: AssertionError
 =========================== short test summary info ============================
-FAILED generated_tests/m3_validation_gen_4.py::test_generated_expectation_is_incorrect
-1 failed, 5 passed in 0.02s",mutation testing skipped: suite did not pass cleanly
-m3_validation,gen_5,5,generated,generated_tests/m3_validation_gen_5.py,False,False,0,0,0,0,0,0.0,,,,5.5714,11,0,0,0,0,0,,CollectionError,,,45,"==================================== ERRORS ====================================
-___________ ERROR collecting generated_tests/m3_validation_gen_5.py ____________
-.venv/lib/python3.12/site-packages/_pytest/python.py:528: in importtestmodule
-    mod = import_path(
-.venv/lib/python3.12/site-packages/_pytest/pathlib.py:640: in import_path
-    importlib.import_module(module_name)
-../../../../.dsh/dsh-runtimes/dsh-primary-runtime/dependencies/python/lib/python3.12/importlib/__init__.py:90: in import_module
-    return _bootstrap._gcd_import(name[level:], package, level)
-           ^^^^^^^^^^^^^^^^^^^
-... [706 chars elided] ...
-endencies/python/lib/python3.12/ast.py:52: in parse
-    return compile(source, filename, mode, flags,
-E     File ""generated_tests/m3_validation_gen_5.py"", line 44
-E       def test_generated_incomplete_case(:
-E                                          ^
-E   SyntaxError: invalid syntax
-=========================== short test summary info ============================
-ERROR generated_tests/m3_validation_gen_5.py
-!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
-no tests collected, 1 error in 0.09s",
-m4_grade_calc,gen_1,1,generated,generated_tests/m4_grade_calc_gen_1.py,True,True,5,5,0,0,0,0.3408,81.8182,76.4706,81.8182,5.0,9,24,14,10,0,0,0.5833,,,2.8,43,,
-m4_grade_calc,gen_2,2,generated,generated_tests/m4_grade_calc_gen_2.py,True,True,3,3,0,0,0,0.3385,47.7273,44.1176,47.7273,5.0,9,24,6,18,0,0,0.25,,,2.3333,29,,
-m4_grade_calc,gen_3,3,generated,generated_tests/m4_grade_calc_gen_3.py,True,True,2,2,0,0,0,0.3305,36.3636,29.4118,36.3636,5.0,9,24,3,21,0,0,0.125,,,2.5,22,,
-m4_grade_calc,gen_4,4,generated,generated_tests/m4_grade_calc_gen_4.py,True,False,6,5,1,0,0,0.3504,81.8182,76.4706,81.8182,5.0,9,0,0,0,0,0,,AssertionFailure,,2.5,48,".....F                                                                   [100%]
+FAILED generated_tests/m3_validation_gen_3.py::test_validate_email_too_long
+1 failed, 51 passed in 0.04s",mutation testing skipped: suite did not pass cleanly
+m3_validation,gen_4,4,generated,generated_tests/m3_validation_gen_4.py,True,False,72,71,1,0,0,0.4337,96.7213,96.0,96.7213,5.5714,11,0,0,0,0,0,,AssertionFailure,,1.0417,334,"............F........................................................... [100%]
 =================================== FAILURES ===================================
-___________________ test_generated_expectation_is_incorrect ____________________
+____________________ TestValidateEmail.test_too_long_raises ____________________
 
-    def test_generated_expectation_is_incorrect() -> None:
-        """"""A plausible-looking assertion that is internally inconsistent.""""""
->       assert 2 + 2 == 5
-E       assert (2 + 2) == 5
+self = <m3_validation_gen_4.TestValidateEmail object at 0x10884a750>
 
-generated_tests/m4_grade_calc_gen_4.py:48: AssertionError
+    def test_too_long_raises(self):
+        local = ""a"" * 240
+        email = local + ""@example.com""
+>       assert len(email) > 254
+E       AssertionError: assert 252 > 254
+E        +  where 252 = len('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa...aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@example.com')
+
+generated_tests/m3_validation_gen_4.py:60: AssertionError
 =========================== short test summary info ============================
-FAILED generated_tests/m4_grade_calc_gen_4.py::test_generated_expectation_is_incorrect
-1 failed, 5 passed in 0.02s",mutation testing skipped: suite did not pass cleanly
-m4_grade_calc,gen_5,5,generated,generated_tests/m4_grade_calc_gen_5.py,False,False,0,0,0,0,0,0.0,,,,5.0,9,0,0,0,0,0,,CollectionError,,,48,"==================================== ERRORS ====================================
-___________ ERROR collecting generated_tests/m4_grade_calc_gen_5.py ____________
-.venv/lib/python3.12/site-packages/_pytest/python.py:528: in importtestmodule
-    mod = import_path(
-.venv/lib/python3.12/site-packages/_pytest/pathlib.py:640: in import_path
-    importlib.import_module(module_name)
-../../../../.dsh/dsh-runtimes/dsh-primary-runtime/dependencies/python/lib/python3.12/importlib/__init__.py:90: in import_module
-    return _bootstrap._gcd_import(name[level:], package, level)
-           ^^^^^^^^^^^^^^^^^^^
-... [706 chars elided] ...
-endencies/python/lib/python3.12/ast.py:52: in parse
-    return compile(source, filename, mode, flags,
-E     File ""generated_tests/m4_grade_calc_gen_5.py"", line 47
-E       def test_generated_incomplete_case(:
-E                                          ^
-E   SyntaxError: invalid syntax
-=========================== short test summary info ============================
-ERROR generated_tests/m4_grade_calc_gen_5.py
-!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
-no tests collected, 1 error in 0.10s",
-m5_inventory,gen_1,1,generated,generated_tests/m5_inventory_gen_1.py,True,True,5,5,0,0,0,0.3456,64.4928,52.1739,64.4928,3.5,5,26,9,17,0,0,0.3462,,,1.8,51,,
-m5_inventory,gen_2,2,generated,generated_tests/m5_inventory_gen_2.py,True,True,3,3,0,0,0,0.3389,48.5507,36.9565,48.5507,3.5,5,26,3,23,0,0,0.1154,,,0.6667,30,,
-m5_inventory,gen_3,3,generated,generated_tests/m5_inventory_gen_3.py,True,True,2,2,0,0,0,0.3318,39.1304,28.2609,39.1304,3.5,5,26,4,22,0,0,0.1538,,,2.0,27,,
-m5_inventory,gen_4,4,generated,generated_tests/m5_inventory_gen_4.py,True,False,6,5,1,0,0,0.349,64.4928,52.1739,64.4928,3.5,5,0,0,0,0,0,,AssertionFailure,,1.6667,56,".....F                                                                   [100%]
+FAILED generated_tests/m3_validation_gen_4.py::TestValidateEmail::test_too_long_raises
+1 failed, 71 passed in 0.04s",mutation testing skipped: suite did not pass cleanly
+m3_validation,gen_5,5,generated,generated_tests/m3_validation_gen_5.py,True,False,107,104,3,0,0,0.4115,100.0,100.0,100.0,5.5714,11,0,0,0,0,0,,AssertionFailure,,1.1282,303,"........................FF.................................F............ [ 67%]
+...................................                                      [100%]
 =================================== FAILURES ===================================
-___________________ test_generated_expectation_is_incorrect ____________________
+___________________ test_validate_email_invalid_shape[a@b.c] ___________________
 
-    def test_generated_expectation_is_incorrect() -> None:
-        """"""A plausible-looking assertion that is internally inconsistent.""""""
->       assert 2 + 2 == 5
-E       assert (2 + 2) == 5
+bad = 'a@b.c'
 
-generated_tests/m5_inventory_gen_4.py:56: AssertionError
+    @pytest.mark.parametrize(
+        ""bad"",
+        [
+            ""plainaddress"",
+            ""a@b"",
+            ""a@@b.co"",
+            ""a@b@c.co"",
+            ""a b@c.co"",
+            ""@b.co"",
+            ""a@.co"",
+            ""a@b..co"",
+            ""a@b.c"",
+   
+... [1295 chars elided] ...
+   AssertionError: Regex pattern did not match.
+E         Expected regex: 'plus prefix'
+E         Actual message: ""invalid phone number: '++1234567890'""
+
+generated_tests/m3_validation_gen_5.py:180: AssertionError
 =========================== short test summary info ============================
-FAILED generated_tests/m5_inventory_gen_4.py::test_generated_expectation_is_incorrect
-1 failed, 5 passed in 0.02s",mutation testing skipped: suite did not pass cleanly
-m5_inventory,gen_5,5,generated,generated_tests/m5_inventory_gen_5.py,False,False,0,0,0,0,0,0.0,,,,3.5,5,0,0,0,0,0,,CollectionError,,,56,"==================================== ERRORS ====================================
-____________ ERROR collecting generated_tests/m5_inventory_gen_5.py ____________
-.venv/lib/python3.12/site-packages/_pytest/python.py:528: in importtestmodule
-    mod = import_path(
-.venv/lib/python3.12/site-packages/_pytest/pathlib.py:640: in import_path
-    importlib.import_module(module_name)
-../../../../.dsh/dsh-runtimes/dsh-primary-runtime/dependencies/python/lib/python3.12/importlib/__init__.py:90: in import_module
-    return _bootstrap._gcd_import(name[level:], package, level)
-           ^^^^^^^^^^^^^^^^^^^
-... [704 chars elided] ...
-ependencies/python/lib/python3.12/ast.py:52: in parse
-    return compile(source, filename, mode, flags,
-E     File ""generated_tests/m5_inventory_gen_5.py"", line 55
-E       def test_generated_incomplete_case(:
-E                                          ^
-E   SyntaxError: invalid syntax
-=========================== short test summary info ============================
-ERROR generated_tests/m5_inventory_gen_5.py
-!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
-no tests collected, 1 error in 0.12s",
-m6_bank_account,gen_1,1,generated,generated_tests/m6_bank_account_gen_1.py,True,True,6,6,0,0,0,0.3416,55.3922,41.3793,55.3922,3.2222,7,39,11,28,0,0,0.2821,,,2.0,58,,
-m6_bank_account,gen_2,2,generated,generated_tests/m6_bank_account_gen_2.py,True,True,4,4,0,0,0,0.3568,47.0588,32.7586,47.0588,3.2222,7,39,7,32,0,0,0.1795,,,1.0,41,,
-m6_bank_account,gen_3,3,generated,generated_tests/m6_bank_account_gen_3.py,True,True,2,2,0,0,0,0.3618,43.1373,27.5862,43.1373,3.2222,7,39,6,33,0,0,0.1538,,,2.5,29,,
-m6_bank_account,gen_4,4,generated,generated_tests/m6_bank_account_gen_4.py,True,False,7,6,1,0,0,0.348,55.3922,41.3793,55.3922,3.2222,7,0,0,0,0,0,,AssertionFailure,,1.8571,63,"......F                                                                  [100%]
+FAILED generated_tests/m3_validation_gen_5.py::test_validate_email_invalid_shape[a@b.c]
+FAILED generated_tests/m3_validation_gen_5.py::test_validate_email_invalid_shape[a@b.co ]
+FAILED generated_tests/m3_validation_gen_5.py::test_validate_phone_plus_not_at_start[++1234567890]
+3 failed, 104 passed in 0.06s",mutation testing skipped: suite did not pass cleanly
+m4_grade_calc,gen_1,1,generated,generated_tests/m4_grade_calc_gen_1.py,True,False,85,84,1,0,0,0.403,100.0,100.0,100.0,5.0,9,0,0,0,0,0,,AssertionFailure,,1.0741,185,"........................................................................ [ 84%]
+.....F.......                                                            [100%]
 =================================== FAILURES ===================================
-___________________ test_generated_expectation_is_incorrect ____________________
+_________________ TestDescribeScore.test_rounding_one_decimal __________________
 
-    def test_generated_expectation_is_incorrect() -> None:
-        """"""A plausible-looking assertion that is internally inconsistent.""""""
->       assert 2 + 2 == 5
-E       assert (2 + 2) == 5
+self = <m4_grade_calc_gen_1.TestDescribeScore object at 0x1087b6360>
 
-generated_tests/m6_bank_account_gen_4.py:63: AssertionError
+    def test_rounding_one_decimal(self):
+        assert describe_score(82.04) == ""B - pass (82.0)""
+>       assert describe_score(82.05) == ""B - pass (82.1)""
+E       AssertionError: assert 'B - pass (82.0)' == 'B - pass (82.1)'
+E         
+E         - B - pass (82.1)
+E         ?              ^
+E         + B - pass (82.0)
+E         ?              ^
+
+generated_tests/m4_grade_calc_gen_1.py:164: AssertionError
 =========================== short test summary info ============================
-FAILED generated_tests/m6_bank_account_gen_4.py::test_generated_expectation_is_incorrect
-1 failed, 6 passed in 0.02s",mutation testing skipped: suite did not pass cleanly
-m6_bank_account,gen_5,5,generated,generated_tests/m6_bank_account_gen_5.py,False,False,0,0,0,0,0,0.0,,,,3.2222,7,0,0,0,0,0,,CollectionError,,,63,"==================================== ERRORS ====================================
-__________ ERROR collecting generated_tests/m6_bank_account_gen_5.py ___________
-.venv/lib/python3.12/site-packages/_pytest/python.py:528: in importtestmodule
-    mod = import_path(
-.venv/lib/python3.12/site-packages/_pytest/pathlib.py:640: in import_path
-    importlib.import_module(module_name)
-../../../../.dsh/dsh-runtimes/dsh-primary-runtime/dependencies/python/lib/python3.12/importlib/__init__.py:90: in import_module
-    return _bootstrap._gcd_import(name[level:], package, level)
-           ^^^^^^^^^^^^^^^^^^^
-... [710 chars elided] ...
-ncies/python/lib/python3.12/ast.py:52: in parse
-    return compile(source, filename, mode, flags,
-E     File ""generated_tests/m6_bank_account_gen_5.py"", line 62
-E       def test_generated_incomplete_case(:
-E                                          ^
-E   SyntaxError: invalid syntax
+FAILED generated_tests/m4_grade_calc_gen_1.py::TestDescribeScore::test_rounding_one_decimal
+1 failed, 84 passed in 0.05s",mutation testing skipped: suite did not pass cleanly
+m4_grade_calc,gen_2,2,generated,generated_tests/m4_grade_calc_gen_2.py,True,False,99,97,2,0,0,0.4077,100.0,100.0,100.0,5.0,9,0,0,0,0,0,,AssertionFailure,,1.129,206,"......................................................................F. [ 72%]
+................F..........                                              [100%]
+=================================== FAILURES ===================================
+___________________ TestPassingScore.test_mean[scores5-True] ___________________
+
+self = <m4_grade_calc_gen_2.TestPassingScore object at 0x107298050>
+scores = [0, 100], expected = True
+
+    @pytest.mark.parametrize(
+        ""scores,expected"",
+        [
+            ([60], True),
+            ([59.99], False),
+            ([60, 60], True),
+            ([59, 61
+... [597 chars elided] ...
+       assert describe_score(85.55) == ""B - pass (85.6)""
+E       AssertionError: assert 'B - pass (85.5)' == 'B - pass (85.6)'
+E         
+E         - B - pass (85.6)
+E         ?              ^
+E         + B - pass (85.5)
+E         ?              ^
+
+generated_tests/m4_grade_calc_gen_2.py:177: AssertionError
 =========================== short test summary info ============================
-ERROR generated_tests/m6_bank_account_gen_5.py
-!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
-no tests collected, 1 error in 0.10s",
-m1_arithmetic,human_baseline,0,human,baselines/test_m1_human.py,True,True,23,23,0,0,0,0.3554,100.0,100.0,100.0,1.6667,3,10,8,2,0,0,0.8,,,1.087,126,,
-m2_string_utils,human_baseline,0,human,baselines/test_m2_human.py,True,True,22,22,0,0,0,0.3347,100.0,100.0,100.0,2.0,4,8,6,2,0,0,0.75,,,1.0909,123,,
-m3_validation,human_baseline,0,human,baselines/test_m3_human.py,True,True,52,52,0,0,0,0.3414,100.0,100.0,100.0,5.5714,11,29,22,7,0,0,0.7586,,,1.1154,189,,
-m4_grade_calc,human_baseline,0,human,baselines/test_m4_human.py,True,True,38,38,0,0,0,0.3575,100.0,100.0,100.0,5.0,9,24,22,2,0,0,0.9167,,,1.1667,156,,
-m5_inventory,human_baseline,0,human,baselines/test_m5_human.py,True,True,34,34,0,0,0,0.4018,100.0,100.0,100.0,3.5,5,26,16,10,0,0,0.6154,,,1.4286,206,,
-m6_bank_account,human_baseline,0,human,baselines/test_m6_human.py,True,True,43,43,0,0,0,0.3544,96.0784,93.1034,96.0784,3.2222,7,39,27,12,0,0,0.6923,,,1.7027,306,,
+FAILED generated_tests/m4_grade_calc_gen_2.py::TestPassingScore::test_mean[scores5-True]
+FAILED generated_tests/m4_grade_calc_gen_2.py::TestDescribeScore::test_formatting_one_decimal
+2 failed, 97 passed in 0.05s",mutation testing skipped: suite did not pass cleanly
+m4_grade_calc,gen_3,3,generated,generated_tests/m4_grade_calc_gen_3.py,True,False,92,90,2,0,0,0.4029,100.0,100.0,100.0,5.0,9,0,0,0,0,0,,AssertionFailure,,1.0357,192,"................................................................F....... [ 78%]
+.F..................                                                     [100%]
+=================================== FAILURES ===================================
+______________ TestPassingScore.test_mean_threshold[scores4-True] ______________
+
+self = <m4_grade_calc_gen_3.TestPassingScore object at 0x10aa46a80>
+scores = [0, 100], expected = True
+
+    @pytest.mark.parametrize(
+        ""scores,expected"",
+        [
+            ([60], True),
+            ([59.99], False),
+            ([60, 60], True),
+            ([59, 60
+... [514 chars elided] ...
+f = <m4_grade_calc_gen_3.TestPassingScore object at 0x10aa4e1b0>
+
+    def test_boundary_values_accepted(self):
+>       assert passing_score([0, 100]) is True
+E       assert False is True
+E        +  where False = passing_score([0, 100])
+
+generated_tests/m4_grade_calc_gen_3.py:151: AssertionError
+=========================== short test summary info ============================
+FAILED generated_tests/m4_grade_calc_gen_3.py::TestPassingScore::test_mean_threshold[scores4-True]
+FAILED generated_tests/m4_grade_calc_gen_3.py::TestPassingScore::test_boundary_values_accepted
+2 failed, 90 passed in 0.05s",mutation testing skipped: suite did not pass cleanly
+m4_grade_calc,gen_4,4,generated,generated_tests/m4_grade_calc_gen_4.py,True,False,95,94,1,0,0,0.4007,100.0,100.0,100.0,5.0,9,0,0,0,0,0,,AssertionFailure,,1.2414,195,"........................................................................ [ 75%]
+.............F.........                                                  [100%]
+=================================== FAILURES ===================================
+__________ TestDescribeScore.test_descriptions[82.05-B - pass (82.1)] __________
+
+self = <m4_grade_calc_gen_4.TestDescribeScore object at 0x10898fad0>
+score = 82.05, expected = 'B - pass (82.1)'
+
+    @pytest.mark.parametrize(
+        ""score,expected"",
+        [
+            (100, ""A - pass (100.0)""),
+            (90, ""A - pass (90.0)""),
+            (89.99, ""
+... [305 chars elided] ...
+- pass (82.1)""),
+        ],
+    )
+    def test_descriptions(self, score, expected):
+>       assert describe_score(score) == expected
+E       AssertionError: assert 'B - pass (82.0)' == 'B - pass (82.1)'
+E         
+E         - B - pass (82.1)
+E         ?              ^
+E         + B - pass (82.0)
+E         ?              ^
+
+generated_tests/m4_grade_calc_gen_4.py:176: AssertionError
+=========================== short test summary info ============================
+FAILED generated_tests/m4_grade_calc_gen_4.py::TestDescribeScore::test_descriptions[82.05-B - pass (82.1)]
+1 failed, 94 passed in 0.05s",mutation testing skipped: suite did not pass cleanly
+m4_grade_calc,gen_5,5,generated,generated_tests/m4_grade_calc_gen_5.py,True,True,94,94,0,0,0,0.389,100.0,100.0,100.0,5.0,9,24,24,0,0,0,1.0,None,,1.0714,193,,
+m5_inventory,gen_1,1,generated,generated_tests/m5_inventory_gen_1.py,True,False,58,57,1,0,0,0.4057,100.0,100.0,100.0,3.5,5,0,0,0,0,0,,AssertionFailure,,1.2069,439,"........................................F.................               [100%]
+=================================== FAILURES ===================================
+_____________________ test_apply_discount_hundred_percent ______________________
+
+    def test_apply_discount_hundred_percent():
+        inv = Inventory()
+        inv.add_item(""widget"", 1, 10.0)
+>       assert inv.apply_discount(""widget"", 100) == pytest.approx(0.0)
+E       assert 5.0 == 0.0 ± 1.0e-12
+E         
+E         comparison failed
+E         Obtained: 5.0
+E         Expected: 0.0 ± 1.0e-12
+
+generated_tests/m5_inventory_gen_1.py:306: AssertionError
+=========================== short test summary info ============================
+FAILED generated_tests/m5_inventory_gen_1.py::test_apply_discount_hundred_percent
+1 failed, 57 passed in 0.05s",mutation testing skipped: suite did not pass cleanly
+m5_inventory,gen_2,2,generated,generated_tests/m5_inventory_gen_2.py,True,True,54,54,0,0,0,0.3884,100.0,100.0,100.0,3.5,5,26,22,4,0,0,0.8462,None,,1.1852,368,,
+m5_inventory,gen_3,3,generated,generated_tests/m5_inventory_gen_3.py,True,False,58,57,1,0,0,0.4011,100.0,100.0,100.0,3.5,5,0,0,0,0,0,,AssertionFailure,,1.2241,439,"........................................F.................               [100%]
+=================================== FAILURES ===================================
+_____________________ test_apply_discount_hundred_percent ______________________
+
+    def test_apply_discount_hundred_percent():
+        inv = Inventory()
+        inv.add_item(""a"", 1, 10.0)
+>       assert inv.apply_discount(""a"", 100) == pytest.approx(0.0)
+E       assert 5.0 == 0.0 ± 1.0e-12
+E         
+E         comparison failed
+E         Obtained: 5.0
+E         Expected: 0.0 ± 1.0e-12
+
+generated_tests/m5_inventory_gen_3.py:306: AssertionError
+=========================== short test summary info ============================
+FAILED generated_tests/m5_inventory_gen_3.py::test_apply_discount_hundred_percent
+1 failed, 57 passed in 0.05s",mutation testing skipped: suite did not pass cleanly
+m5_inventory,gen_4,4,generated,generated_tests/m5_inventory_gen_4.py,True,False,59,58,1,0,0,0.3959,100.0,100.0,100.0,3.5,5,0,0,0,0,0,,AssertionFailure,,1.2034,408,".........................................F.................              [100%]
+=================================== FAILURES ===================================
+_____________________ test_apply_discount_hundred_percent ______________________
+
+    def test_apply_discount_hundred_percent():
+        inv = Inventory()
+        inv.add_item(""Apple"", 10, 10.0)
+        new_price = inv.apply_discount(""Apple"", 100)
+>       assert new_price == pytest.approx(0.0)
+E       assert 5.0 == 0.0 ± 1.0e-12
+E         
+E         comparison failed
+E         Obtained: 5.0
+E         Expected: 0.0 ± 1.0e-12
+
+generated_tests/m5_inventory_gen_4.py:278: AssertionError
+=========================== short test summary info ============================
+FAILED generated_tests/m5_inventory_gen_4.py::test_apply_discount_hundred_percent
+1 failed, 58 passed in 0.05s",mutation testing skipped: suite did not pass cleanly
+m5_inventory,gen_5,5,generated,generated_tests/m5_inventory_gen_5.py,True,False,57,56,1,0,0,0.4009,100.0,100.0,100.0,3.5,5,0,0,0,0,0,,AssertionFailure,,1.2105,432,".........................................F...............                [100%]
+=================================== FAILURES ===================================
+___________________________ test_apply_discount_full ___________________________
+
+    def test_apply_discount_full():
+        inv = Inventory()
+        inv.add_item(""apple"", 1, 10.0)
+>       assert inv.apply_discount(""apple"", 100) == pytest.approx(0.0)
+E       assert 5.0 == 0.0 ± 1.0e-12
+E         
+E         comparison failed
+E         Obtained: 5.0
+E         Expected: 0.0 ± 1.0e-12
+
+generated_tests/m5_inventory_gen_5.py:308: AssertionError
+=========================== short test summary info ============================
+FAILED generated_tests/m5_inventory_gen_5.py::test_apply_discount_full - asse...
+1 failed, 56 passed in 0.05s",mutation testing skipped: suite did not pass cleanly
+m6_bank_account,gen_1,1,generated,generated_tests/m6_bank_account_gen_1.py,True,True,62,62,0,0,0,0.391,99.0196,98.2759,99.0196,3.2222,7,39,29,10,0,0,0.7436,None,,1.7018,496,,
+m6_bank_account,gen_2,2,generated,generated_tests/m6_bank_account_gen_2.py,True,False,69,67,2,0,0,0.4165,99.0196,98.2759,99.0196,3.2222,7,0,0,0,0,0,,RuntimeError,,1.5373,546,"..................................F.......................F..........    [100%]
+=================================== FAILURES ===================================
+__________________________ test_transfer_from_closed ___________________________
+
+    def test_transfer_from_closed():
+        a = BankAccount(""A"")
+        b = BankAccount(""B"")
+        a.deposit(100)
+>       a.close()
+
+generated_tests/m6_bank_account_gen_2.py:248: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <benchmark.m6_bank_account.BankAccount object at 0x10ac37110>
+
+    def close(self) -
+... [1075 chars elided] ...
+exactly zero.
+        """"""
+        if self._closed:
+            raise ValueError(""account is already closed"")
+        if self.balance != 0:
+>           raise ValueError(""account balance must be zero before closing"")
+E           ValueError: account balance must be zero before closing
+
+benchmark/m6_bank_account.py:277: ValueError
+=========================== short test summary info ============================
+FAILED generated_tests/m6_bank_account_gen_2.py::test_transfer_from_closed - ...
+FAILED generated_tests/m6_bank_account_gen_2.py::test_dispute_on_closed - Val...
+2 failed, 67 passed in 0.06s",mutation testing skipped: suite did not pass cleanly
+m6_bank_account,gen_3,3,generated,generated_tests/m6_bank_account_gen_3.py,True,False,78,76,2,0,0,0.4231,100.0,100.0,100.0,3.2222,7,0,0,0,0,0,,RuntimeError,,1.4211,606,"...............................................................F........ [ 92%]
+.....F                                                                   [100%]
+=================================== FAILURES ===================================
+_____________________________ test_dispute_closed ______________________________
+
+    def test_dispute_closed():
+        acct = BankAccount(""A"")
+        acct.deposit(100)
+        acct.withdraw(30)
+>       acct.close()
+
+generated_tests/m6_bank_account_gen_3.py:480: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <ben
+... [1073 chars elided] ...
+:
+            ValueError: If the account is closed or ``amount < MIN_DEPOSIT``.
+        """"""
+        self._ensure_open()
+        if amount < MIN_DEPOSIT:
+>           raise ValueError(f""deposit must be at least {MIN_DEPOSIT:.2f}"")
+E           ValueError: deposit must be at least 1.00
+
+benchmark/m6_bank_account.py:100: ValueError
+=========================== short test summary info ============================
+FAILED generated_tests/m6_bank_account_gen_3.py::test_dispute_closed - ValueE...
+FAILED generated_tests/m6_bank_account_gen_3.py::test_balance_rounding - Valu...
+2 failed, 76 passed in 0.07s",mutation testing skipped: suite did not pass cleanly
+m6_bank_account,gen_4,4,generated,generated_tests/m6_bank_account_gen_4.py,True,False,62,60,2,0,0,0.413,99.0196,98.2759,99.0196,3.2222,7,0,0,0,0,0,,AssertionFailure,,1.6167,501,"......................F.............................F.........           [100%]
+=================================== FAILURES ===================================
+_____________________ test_withdraw_overdraft_within_limit _____________________
+
+    def test_withdraw_overdraft_within_limit():
+        acc = BankAccount(""A"", overdraft_limit=100)
+        acc.deposit(50)
+        # projected = 50 - 120 = -70, within -100, then overdraft fee 10 -> -80
+        result = acc.withdraw(120)
+>       assert result == pytest.approx(-80.0)
+E       assert -82.5 == -80.0 ± 8.0e-05
+E         
+E         comparison 
+... [468 chars elided] ...
+if e[""type""] == ""fee"")
+        result = acc.dispute(fee_index, OVERDRAFT_FEE)
+>       assert result == pytest.approx(-70.0)
+E       assert -72.5 == -70.0 ± 7.0e-05
+E         
+E         comparison failed
+E         Obtained: -72.5
+E         Expected: -70.0 ± 7.0e-05
+
+generated_tests/m6_bank_account_gen_4.py:414: AssertionError
+=========================== short test summary info ============================
+FAILED generated_tests/m6_bank_account_gen_4.py::test_withdraw_overdraft_within_limit
+FAILED generated_tests/m6_bank_account_gen_4.py::test_dispute_fee_transaction
+2 failed, 60 passed in 0.06s",mutation testing skipped: suite did not pass cleanly
+m6_bank_account,gen_5,5,generated,generated_tests/m6_bank_account_gen_5.py,True,False,65,63,2,0,0,0.4167,99.0196,98.2759,99.0196,3.2222,7,0,0,0,0,0,,RuntimeError,,1.5556,514,"................................F......................F.........        [100%]
+=================================== FAILURES ===================================
+__________________________ test_transfer_from_closed ___________________________
+
+    def test_transfer_from_closed():
+        a = BankAccount(""A"")
+        b = BankAccount(""B"")
+        a.deposit(100)
+>       a.close()
+
+generated_tests/m6_bank_account_gen_5.py:236: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <benchmark.m6_bank_account.BankAccount object at 0x10919a7e0>
+
+    def close(self) -
+... [1075 chars elided] ...
+exactly zero.
+        """"""
+        if self._closed:
+            raise ValueError(""account is already closed"")
+        if self.balance != 0:
+>           raise ValueError(""account balance must be zero before closing"")
+E           ValueError: account balance must be zero before closing
+
+benchmark/m6_bank_account.py:277: ValueError
+=========================== short test summary info ============================
+FAILED generated_tests/m6_bank_account_gen_5.py::test_transfer_from_closed - ...
+FAILED generated_tests/m6_bank_account_gen_5.py::test_dispute_on_closed - Val...
+2 failed, 63 passed in 0.06s",mutation testing skipped: suite did not pass cleanly
+m1_arithmetic,human_baseline,0,human,baselines/test_m1_human.py,True,True,23,23,0,0,0,0.3689,100.0,100.0,100.0,1.6667,3,10,8,2,0,0,0.8,None,,1.087,126,,
+m2_string_utils,human_baseline,0,human,baselines/test_m2_human.py,True,True,22,22,0,0,0,0.3669,100.0,100.0,100.0,2.0,4,8,6,2,0,0,0.75,None,,1.0909,123,,
+m3_validation,human_baseline,0,human,baselines/test_m3_human.py,True,True,52,52,0,0,0,0.371,100.0,100.0,100.0,5.5714,11,29,22,7,0,0,0.7586,None,,1.1154,189,,
+m4_grade_calc,human_baseline,0,human,baselines/test_m4_human.py,True,True,38,38,0,0,0,0.3459,100.0,100.0,100.0,5.0,9,24,22,2,0,0,0.9167,None,,1.1667,156,,
+m5_inventory,human_baseline,0,human,baselines/test_m5_human.py,True,True,34,34,0,0,0,0.363,100.0,100.0,100.0,3.5,5,26,16,10,0,0,0.6154,None,,1.4286,206,,
+m6_bank_account,human_baseline,0,human,baselines/test_m6_human.py,True,True,43,43,0,0,0,0.3681,96.0784,93.1034,96.0784,3.2222,7,39,27,12,0,0,0.6923,None,,1.7027,306,,
