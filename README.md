@@ -26,14 +26,13 @@ verified with no API key. `--api` switches generation to a real hosted model.
 
 ---
 
-## Results at a glance
+## Results — synthetic validation corpus
 
-> **Provenance: synthetic (mock corpus).** These figures come from the deterministic
-> offline generator (`--mock`, 5 runs x 6 modules), not from a live LLM. They validate
-> that the measurement pipeline works end to end. A live Gemini run was started but
-> stopped at 11/30 suites by the provider's 20-requests/day free-tier cap, so this
-> commit ships no live corpus. Treat the numbers as pipeline validation, not as
-> evidence about LLM behaviour.
+These figures come from the deterministic offline generator (`--mock`, 5 runs x 6
+modules). Their purpose is to validate the measurement pipeline end to end, not to
+characterise a live model: a Gemini collection was started but stopped at 11/30
+suites by the provider's 20-requests/day free-tier cap, so this commit ships no
+live corpus.
 
 | Metric | Generated (n=30) | Human baseline (n=6) |
 | --- | ---: | ---: |
@@ -51,10 +50,10 @@ mutation score rho = +0.082 (p = 0.75).
 
 Failure taxonomy across all 36 evaluated suites: 24 clean, 6 `CollectionError`,
 6 `AssertionFailure` (the mock profiles inject one broken and one wrong suite per
-module, so this split is by construction rather than an observed LLM rate).
+module, so this split is by construction rather than an observed rate).
 
-Full artefacts: `results/evaluation_metrics.csv`, `results/correlation_analysis.csv`,
-`results/figures/`, `results/reports/analysis_report.md`. Regenerate everything with:
+Artefacts: `results/evaluation_metrics.csv`, `results/correlation_analysis.csv`,
+`results/figures/`, `results/reports/analysis_report.md`. Regenerate with:
 
 ```bash
 python run_experiments.py --mock --runs 5
