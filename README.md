@@ -51,9 +51,21 @@ Failure taxonomy across all 36 evaluated suites: 19 clean, 14 `AssertionFailure`
 3 `RuntimeError` — every failing generated suite failed after collection, none at
 import time.
 
-Artefacts: `results/evaluation_metrics.csv`, `results/correlation_analysis.csv`,
-`results/figures/`, `results/reports/analysis_report.md`. Regenerate the analysis
-from the stored CSV without touching the corpus with:
+Artefacts, all derived from this run:
+
+| File | Contents |
+| --- | --- |
+| `results/evaluation_metrics.csv` | 36 rows x 30 columns, one row per suite |
+| `results/summary_statistics.csv` | mean/median/std/min/max/Q1/Q3/IQR per metric |
+| `results/correlation_analysis.csv` | Spearman rho, p, n per RQ, two scopes |
+| `results/complexity_report.json` | radon CC per function plus module averages |
+| `results/figures/rq2_rq3_coverage_vs_mutation.png` | RQ2/RQ3 scatter with trend lines |
+| `results/figures/rq5_complexity_vs_scores.png` | RQ5 box plot, scatter and bar panels |
+| `results/figures/rq6_failure_categories.png` | RQ6 failure taxonomy |
+| `results/reports/analysis_report.md` | auto-generated narrative report |
+| `generated_tests/manifest.json` | provider, model, prompt hashes, token usage |
+
+Regenerate the analysis from the stored CSV without touching the corpus with:
 
 ```bash
 python -c "from pipeline.analyzer import run_analysis; from pipeline.config import ProjectPaths; run_analysis(ProjectPaths.resolve())"
@@ -121,7 +133,7 @@ llm-test-eval/
 │   ├── m4_grade_calc.py        # medium    (CC ~4-6)
 │   ├── m5_inventory.py         # med-high  (CC ~5-8)
 │   └── m6_bank_account.py      # high      (CC ~6-10)
-├── baselines/                  # human ground-truth pytest suites (175 tests)
+├── baselines/                  # human ground-truth pytest suites (212 tests)
 ├── generated_tests/            # {module}_gen_{run}.py + manifest.json
 ├── pipeline/
 │   ├── config.py               # ProjectPaths, RESULT_COLUMNS, subprocess runner
@@ -141,6 +153,8 @@ llm-test-eval/
 ├── requirements.txt
 ├── setup.cfg                   # pytest / coverage / packaging config
 ├── setup_env.sh                # one-shot environment bootstrap
+├── .env.example                # key template (real .env is git-ignored)
+├── .gitignore                  # excludes .venv, caches, .env
 └── README.md
 ```
 
