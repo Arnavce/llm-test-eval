@@ -51,6 +51,25 @@ Failure taxonomy across all 36 evaluated suites: 19 clean, 14 `AssertionFailure`
 3 `RuntimeError` — every failing generated suite failed after collection, none at
 import time.
 
+### Figures
+
+**RQ2/RQ3 — coverage vs mutation score.** One point per generated suite that
+executed cleanly (n = 13). Both panels use the same suites; note the x-axis spans
+only 96.7-100%, because coverage saturates on this corpus.
+
+![RQ2/RQ3: coverage vs mutation score](results/figures/rq2_rq3_coverage_vs_mutation.png)
+
+**RQ5 — complexity and outcomes.** Mutation-score distribution per module, the
+complexity/mutation scatter, and per-module means of mutation, coverage and
+execution success.
+
+![RQ5: complexity vs test outcomes](results/figures/rq5_complexity_vs_scores.png)
+
+**RQ6 — failure taxonomy.** Every evaluated suite, classified as clean,
+`CollectionError`, `AssertionFailure`, `RuntimeError` or `Timeout`.
+
+![RQ6: failure category distribution](results/figures/rq6_failure_categories.png)
+
 Artefacts, all derived from this run:
 
 | File | Contents |
