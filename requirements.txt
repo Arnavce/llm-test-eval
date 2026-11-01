@@ -1,0 +1,11 @@
+# Core test execution and measurement
+pytest>=7.4
+pytest-cov>=4.1
+radon>=6.0
+mutmut>=2.4
+
+# Analysis and visualisation
+pandas>=2.0
+scipy>=1.10
+matplotlib>=3.7
+tabulate>=0.9

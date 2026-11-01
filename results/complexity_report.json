@@ -1,0 +1,389 @@
+{
+  "generated_by": "pipeline.complexity",
+  "modules": {
+    "m1_arithmetic": {
+      "module": "m1_arithmetic",
+      "path": "benchmark/m1_arithmetic.py",
+      "average_complexity": 1.6667,
+      "max_complexity": 3,
+      "total_complexity": 10,
+      "functions": [
+        {
+          "name": "add",
+          "complexity": 1,
+          "lineno": 26,
+          "kind": "function"
+        },
+        {
+          "name": "subtract",
+          "complexity": 1,
+          "lineno": 31,
+          "kind": "function"
+        },
+        {
+          "name": "multiply",
+          "complexity": 1,
+          "lineno": 36,
+          "kind": "function"
+        },
+        {
+          "name": "divide",
+          "complexity": 2,
+          "lineno": 41,
+          "kind": "function"
+        },
+        {
+          "name": "average",
+          "complexity": 3,
+          "lineno": 52,
+          "kind": "function"
+        },
+        {
+          "name": "is_close",
+          "complexity": 2,
+          "lineno": 66,
+          "kind": "function"
+        }
+      ],
+      "source": "radon.cc_api"
+    },
+    "m2_string_utils": {
+      "module": "m2_string_utils",
+      "path": "benchmark/m2_string_utils.py",
+      "average_complexity": 2.0,
+      "max_complexity": 4,
+      "total_complexity": 12,
+      "functions": [
+        {
+          "name": "_require_text",
+          "complexity": 2,
+          "lineno": 25,
+          "kind": "function"
+        },
+        {
+          "name": "normalise",
+          "complexity": 1,
+          "lineno": 31,
+          "kind": "function"
+        },
+        {
+          "name": "reverse",
+          "complexity": 1,
+          "lineno": 40,
+          "kind": "function"
+        },
+        {
+          "name": "is_palindrome",
+          "complexity": 4,
+          "lineno": 46,
+          "kind": "function"
+        },
+        {
+          "name": "word_count",
+          "complexity": 1,
+          "lineno": 59,
+          "kind": "function"
+        },
+        {
+          "name": "truncate",
+          "complexity": 3,
+          "lineno": 65,
+          "kind": "function"
+        }
+      ],
+      "source": "radon.cc_api"
+    },
+    "m3_validation": {
+      "module": "m3_validation",
+      "path": "benchmark/m3_validation.py",
+      "average_complexity": 5.5714,
+      "max_complexity": 11,
+      "total_complexity": 39,
+      "functions": [
+        {
+          "name": "validate_email",
+          "complexity": 11,
+          "lineno": 48,
+          "kind": "function"
+        },
+        {
+          "name": "validate_phone",
+          "complexity": 11,
+          "lineno": 80,
+          "kind": "function"
+        },
+        {
+          "name": "validate_username",
+          "complexity": 7,
+          "lineno": 112,
+          "kind": "function"
+        },
+        {
+          "name": "validate_age",
+          "complexity": 7,
+          "lineno": 136,
+          "kind": "function"
+        },
+        {
+          "name": "ValidationError",
+          "complexity": 1,
+          "lineno": 36,
+          "kind": "class"
+        },
+        {
+          "name": "InvalidEmailError",
+          "complexity": 1,
+          "lineno": 40,
+          "kind": "class"
+        },
+        {
+          "name": "InvalidPhoneError",
+          "complexity": 1,
+          "lineno": 44,
+          "kind": "class"
+        }
+      ],
+      "source": "radon.cc_api"
+    },
+    "m4_grade_calc": {
+      "module": "m4_grade_calc",
+      "path": "benchmark/m4_grade_calc.py",
+      "average_complexity": 5.0,
+      "max_complexity": 9,
+      "total_complexity": 25,
+      "functions": [
+        {
+          "name": "letter_grade",
+          "complexity": 9,
+          "lineno": 34,
+          "kind": "function"
+        },
+        {
+          "name": "grade_point",
+          "complexity": 3,
+          "lineno": 58,
+          "kind": "function"
+        },
+        {
+          "name": "weighted_average",
+          "complexity": 6,
+          "lineno": 72,
+          "kind": "function"
+        },
+        {
+          "name": "passing_score",
+          "complexity": 5,
+          "lineno": 95,
+          "kind": "function"
+        },
+        {
+          "name": "describe_score",
+          "complexity": 2,
+          "lineno": 112,
+          "kind": "function"
+        }
+      ],
+      "source": "radon.cc_api"
+    },
+    "m5_inventory": {
+      "module": "m5_inventory",
+      "path": "benchmark/m5_inventory.py",
+      "average_complexity": 3.5,
+      "max_complexity": 5,
+      "total_complexity": 42,
+      "functions": [
+        {
+          "name": "Inventory",
+          "complexity": 4,
+          "lineno": 22,
+          "kind": "class"
+        },
+        {
+          "name": "__init__",
+          "complexity": 2,
+          "lineno": 30,
+          "kind": "function"
+        },
+        {
+          "name": "add_item",
+          "complexity": 4,
+          "lineno": 36,
+          "kind": "function"
+        },
+        {
+          "name": "_validate_purchase",
+          "complexity": 5,
+          "lineno": 57,
+          "kind": "function"
+        },
+        {
+          "name": "remove_item",
+          "complexity": 5,
+          "lineno": 66,
+          "kind": "function"
+        },
+        {
+          "name": "restock",
+          "complexity": 3,
+          "lineno": 85,
+          "kind": "function"
+        },
+        {
+          "name": "stock_level",
+          "complexity": 2,
+          "lineno": 100,
+          "kind": "function"
+        },
+        {
+          "name": "total_value",
+          "complexity": 2,
+          "lineno": 111,
+          "kind": "function"
+        },
+        {
+          "name": "low_stock",
+          "complexity": 3,
+          "lineno": 118,
+          "kind": "function"
+        },
+        {
+          "name": "apply_discount",
+          "complexity": 5,
+          "lineno": 129,
+          "kind": "function"
+        },
+        {
+          "name": "bulk_restock",
+          "complexity": 5,
+          "lineno": 150,
+          "kind": "function"
+        },
+        {
+          "name": "inventory_report",
+          "complexity": 2,
+          "lineno": 171,
+          "kind": "function"
+        }
+      ],
+      "source": "radon.cc_api"
+    },
+    "m6_bank_account": {
+      "module": "m6_bank_account",
+      "path": "benchmark/m6_bank_account.py",
+      "average_complexity": 3.2222,
+      "max_complexity": 7,
+      "total_complexity": 58,
+      "functions": [
+        {
+          "name": "BankAccount",
+          "complexity": 4,
+          "lineno": 32,
+          "kind": "class"
+        },
+        {
+          "name": "__init__",
+          "complexity": 6,
+          "lineno": 48,
+          "kind": "function"
+        },
+        {
+          "name": "balance",
+          "complexity": 1,
+          "lineno": 76,
+          "kind": "function"
+        },
+        {
+          "name": "closed",
+          "complexity": 1,
+          "lineno": 81,
+          "kind": "function"
+        },
+        {
+          "name": "transactions",
+          "complexity": 2,
+          "lineno": 85,
+          "kind": "function"
+        },
+        {
+          "name": "deposit",
+          "complexity": 2,
+          "lineno": 92,
+          "kind": "function"
+        },
+        {
+          "name": "withdraw",
+          "complexity": 7,
+          "lineno": 105,
+          "kind": "function"
+        },
+        {
+          "name": "transfer",
+          "complexity": 4,
+          "lineno": 138,
+          "kind": "function"
+        },
+        {
+          "name": "apply_monthly_interest",
+          "complexity": 3,
+          "lineno": 158,
+          "kind": "function"
+        },
+        {
+          "name": "apply_monthly_statement",
+          "complexity": 1,
+          "lineno": 172,
+          "kind": "function"
+        },
+        {
+          "name": "_credit_interest_for_statement",
+          "complexity": 3,
+          "lineno": 194,
+          "kind": "function"
+        },
+        {
+          "name": "_charge_maintenance_fee",
+          "complexity": 4,
+          "lineno": 203,
+          "kind": "function"
+        },
+        {
+          "name": "dispute",
+          "complexity": 7,
+          "lineno": 216,
+          "kind": "function"
+        },
+        {
+          "name": "transaction_history",
+          "complexity": 6,
+          "lineno": 246,
+          "kind": "function"
+        },
+        {
+          "name": "close",
+          "complexity": 3,
+          "lineno": 267,
+          "kind": "function"
+        },
+        {
+          "name": "summary",
+          "complexity": 1,
+          "lineno": 281,
+          "kind": "function"
+        },
+        {
+          "name": "_ensure_open",
+          "complexity": 2,
+          "lineno": 295,
+          "kind": "function"
+        },
+        {
+          "name": "_record",
+          "complexity": 1,
+          "lineno": 300,
+          "kind": "function"
+        }
+      ],
+      "source": "radon.cc_api"
+    }
+  }
+}

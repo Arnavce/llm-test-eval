@@ -1,0 +1,395 @@
+# Evaluating LLM-Generated Python Unit Tests
+
+### Cyclomatic Complexity, Coverage, and Mutation Testing on the CPB-6 Corpus
+
+This repository is a self-contained empirical-software-engineering harness for
+answering one question:
+
+> When an LLM writes pytest suites for Python code, **how good are those suites
+> really** — and do the cheap proxies (coverage, complexity) actually predict
+> the expensive ground truth (mutation score)?
+
+It evaluates generated suites against six controlled benchmark modules
+(**CPB-6**) using four independent measurement lenses:
+
+| Lens | Tool | Output |
+| --- | --- | --- |
+| Cyclomatic complexity | `radon cc -j` | average / max complexity per module |
+| Collection & execution | `pytest` (subprocess) | pass/fail/error counts, wall time, failure class |
+| Line & branch coverage | `pytest-cov` / `coverage.py` | `line_coverage`, `branch_coverage` |
+| Mutation testing | built-in AST mutant engine | `mutation_score = killed / viable` |
+| Statistics | `pandas`, `scipy`, `matplotlib` | Spearman ρ, summary tables, figures |
+
+Everything runs **offline by default** (`--mock`), so the full pipeline —
+generation → execution → coverage → mutation → analysis → figures — can be
+verified with no API key. `--api` switches generation to a real hosted model.
+
+---
+
+## Results at a glance
+
+> **Provenance: synthetic (mock corpus).** These figures come from the deterministic
+> offline generator (`--mock`, 5 runs x 6 modules), not from a live LLM. They validate
+> that the measurement pipeline works end to end. A live Gemini run was started but
+> stopped at 11/30 suites by the provider's 20-requests/day free-tier cap, so this
+> commit ships no live corpus. Treat the numbers as pipeline validation, not as
+> evidence about LLM behaviour.
+
+| Metric | Generated (n=30) | Human baseline (n=6) |
+| --- | ---: | ---: |
+| Collection success | 80.0% | 100.0% |
+| Execution success | 60.0% | 100.0% |
+| Line coverage (mean) | 60.3% | 99.3% |
+| Branch coverage (mean) | 49.6% | 98.9% |
+| Mutation score (mean, scored suites) | 0.28 (n=18) | 0.76 (n=6) |
+| Tests per suite | 3.3 | 35.3 |
+
+Spearman on the generated suites: line coverage vs mutation score **rho = +0.858**
+(p = 5e-6, n = 18); branch coverage vs mutation score **rho = +0.911** (p < 1e-6,
+n = 18); complexity vs execution success rho = 0.000 (p = 1.0); complexity vs
+mutation score rho = +0.082 (p = 0.75).
+
+Failure taxonomy across all 36 evaluated suites: 24 clean, 6 `CollectionError`,
+6 `AssertionFailure` (the mock profiles inject one broken and one wrong suite per
+module, so this split is by construction rather than an observed LLM rate).
+
+Full artefacts: `results/evaluation_metrics.csv`, `results/correlation_analysis.csv`,
+`results/figures/`, `results/reports/analysis_report.md`. Regenerate everything with:
+
+```bash
+python run_experiments.py --mock --runs 5
+```
+
+---
+
+## 1. Quick start
+
+```bash
+cd llm-test-eval
+
+# 1. Environment
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+# 2. Fast validation (no mutation testing, ~seconds)
+python run_experiments.py --mock --runs 5 --skip-mutation
+
+# 3. Full offline study (includes mutation testing)
+python run_experiments.py --mock --runs 5
+
+# 4. Live LLM generation
+export OPENAI_API_KEY="sk-..."
+python run_experiments.py --api --provider openai --model gpt-4o-mini --runs 5
+
+# 5. Inspect the artefacts
+open results/reports/analysis_report.md
+open results/figures/rq2_rq3_coverage_vs_mutation.png
+```
+
+> **macOS note.** Some hardened-runtime Python builds (including the bundled
+> DSH runtime) refuse to load wheel-installed `.so` files with
+> `different Team IDs`. `./setup_env.sh` handles this by creating an
+> ad-hoc-signed copy at `.venv/bin/python-local`; run the pipeline with that
+> interpreter if `import numpy` fails:
+> `./.venv/bin/python-local run_experiments.py --mock --runs 5`.
+> This workspace was verified with such a copy (`setup_env.sh` creates it as
+> `.venv/bin/python-local`).
+
+The run finishes by printing four formatted tables to stdout: per-module
+means, a generated-vs-human comparison (with `line cov*` computed over every
+suite and `line cov` over cleanly-executing suites), the Spearman correlation
+block, and the RQ6 failure distribution. Everything is also written under
+`results/`.
+
+---
+
+## 2. Repository layout
+
+```text
+llm-test-eval/
+├── benchmark/                  # CPB-6: six pure-stdlib modules, increasing complexity
+│   ├── __init__.py             # MODULE_ORDER, MODULE_LABELS
+│   ├── m1_arithmetic.py        # low       (CC ~1-3)
+│   ├── m2_string_utils.py      # low-med   (CC ~2-4)
+│   ├── m3_validation.py        # medium    (CC ~3-5)
+│   ├── m4_grade_calc.py        # medium    (CC ~4-6)
+│   ├── m5_inventory.py         # med-high  (CC ~5-8)
+│   └── m6_bank_account.py      # high      (CC ~6-10)
+├── baselines/                  # human ground-truth pytest suites (175 tests)
+├── generated_tests/            # {module}_gen_{run}.py + manifest.json
+├── pipeline/
+│   ├── config.py               # ProjectPaths, RESULT_COLUMNS, subprocess runner
+│   ├── complexity.py           # radon CLI/API + safe AST fallback
+│   ├── generator.py            # mock profiles + OpenAI/DeepSeek/Gemini clients
+│   ├── evaluator.py            # pytest, coverage, AST mutation engine, classifier
+│   ├── analyzer.py             # statistics, Spearman, figures, markdown report
+│   └── coverage.ini            # isolated coverage configuration
+├── results/
+│   ├── evaluation_metrics.csv  # one row per (module, suite)
+│   ├── summary_statistics.csv  # mean/median/std/min/max/Q1/Q3/IQR
+│   ├── correlation_analysis.csv
+│   ├── complexity_report.json
+│   ├── figures/                # high-resolution PNGs
+│   └── reports/analysis_report.md
+├── run_experiments.py          # CLI entry point
+├── requirements.txt
+├── setup.cfg                   # pytest / coverage / packaging config
+├── setup_env.sh                # one-shot environment bootstrap
+└── README.md
+```
+
+---
+
+## 3. The CPB-6 benchmark
+
+The six modules were written for this study to give a controlled complexity
+gradient while staying dependency-free. They are *not* toy one-liners: each
+ships with explicit guards, custom exceptions, or class state, so weak suites
+have somewhere to fail.
+
+| Module | Domain | Notable contract |
+| --- | --- | --- |
+| `m1_arithmetic` | scalar math | division-by-zero, empty-average, negative tolerance |
+| `m2_string_utils` | strings | unicode-safe palindrome, whitespace normalisation, suffix budget |
+| `m3_validation` | input validation | email/phone regexes, 254-char boundary, custom error hierarchy |
+| `m4_grade_calc` | grading | 60/70/80/90 boundaries, GPA map, weighted average, rounding |
+| `m5_inventory` | dictionaries | accumulate stock, reorder threshold, percentage discounts, sorted report |
+| `m6_bank_account` | OOP state machine | fees, overdraft limit, transfers, interest, close-only-at-zero |
+
+Complexity is **measured, not assumed**. `results/complexity_report.json`
+records every function's CC, the module average and the maximum, together with
+the measurement mechanism (`radon.cc_cli`, `radon.cc_api`, or `ast_fallback`).
+On the shipped corpus the block averages are:
+
+| Module | Avg CC | Max CC | Blocks | Intended band |
+| --- | ---: | ---: | ---: | --- |
+| `m1_arithmetic` | 1.67 | 3 | 6 | low (1-3) |
+| `m2_string_utils` | 2.00 | 4 | 6 | low-medium (2-4) |
+| `m3_validation` | 5.57 | 11 | 7 | medium (3-5) |
+| `m4_grade_calc` | 5.00 | 9 | 5 | medium (4-6) |
+| `m5_inventory` | 3.50 | 5 | 12 | medium-high (5-8) |
+| `m6_bank_account` | 3.22 | 7 | 18 | high (6-10) |
+
+Two honest caveats. First, the average is a **radon block average** and
+therefore includes class definitions, property getters and the three
+one-line exception classes in M3; M5/M6 are class-heavy, so their *method*
+complexities (`withdraw` 7, `dispute` 7, `add_item` 4, `bulk_restock` 5) are
+higher than the block average suggests. Second, M3 and M4 deliberately
+concentrate their branching in a few validators/graders, so their maximum
+exceeds M5/M6; the corpus compares *different shapes* of complexity, not a
+strictly monotone line. Re-run `ComplexityAnalyzer` after any edit rather than
+trusting the table.
+
+---
+
+## 4. Pipeline stages
+
+### 4.1 Generation (`pipeline/generator.py`)
+
+**Mock mode** is deterministic and needs no network. Each run is assigned one
+of five synthetic "LLM profiles":
+
+| Run | Profile | What the suite looks like | Expected label |
+| --- | --- | --- | --- |
+| 1 | `high` | every behaviour asserted | clean pass |
+| 2 | `medium` | some tests never assert | clean pass, lower mutation score |
+| 3 | `low` | few scenarios, most assertions stripped | clean pass, weakest scores |
+| 4 | `wrong` | one plausible but incorrect expectation | `AssertionFailure` |
+| 5 | `broken` | truncated line → `SyntaxError` | `CollectionError` |
+
+Suites are shuffled with a seeded RNG (`--seed`) and written atomically to
+`generated_tests/{module}_gen_{run}.py`; `generated_tests/manifest.json`
+records the profile, prompt hash, provider/model and token usage.
+
+**API mode** uses a fixed prompt (`GENERATION_PROMPT`) that includes the full
+source file and a strict contract: absolute imports, boundary coverage,
+`pytest.raises`, no external dependencies. The response is de-fenced,
+`ast.parse`-validated, retried with exponential backoff, and rejected if it
+contains no `test_` function.
+
+### 4.2 Evaluation (`pipeline/evaluator.py`)
+
+For every suite, in order:
+
+1. **Collection** — `pytest --collect-only -q`; records `collection_success`.
+2. **Execution** — `pytest -q`; parses passed/failed/errors/skipped and wall
+   time; `execution_success` requires a zero exit code and at least one pass.
+3. **Coverage** — re-runs `pytest --cov=benchmark.<module> --cov-branch
+   --cov-report=json:<path>` inside an isolated copy of the benchmark package
+   and extracts line %, branch % and a combined percentage.
+4. **Mutation** — only for suites that pass cleanly (a failing suite would
+   otherwise "kill" mutants for the wrong reason).
+5. **Classification** — exactly one of `None`, `CollectionError`,
+   `AssertionFailure`, `RuntimeError`, `Timeout`.
+
+**The mutation engine.** Rather than shelling out to `mutmut` (whose on-disk
+cache is version-specific and slow to recycle across hundreds of short-lived
+suites), the pipeline implements a deterministic AST mutator and keeps
+`mutmut` in `requirements.txt` for independent cross-checks:
+
+| Mutation class | Examples |
+| --- | --- |
+| arithmetic | `+ ↔ -`, `* ↔ /`, `// → /`, `% → *` |
+| comparison | `< ↔ <=`, `> ↔ >=`, `== ↔ !=` |
+| boolean | `and ↔ or` |
+| negation | `not x → x` |
+| boolean literal | `return True ↔ return False` |
+
+Each candidate is applied by exact source coordinates, re-compiled (invalid
+mutants are discarded, not counted), and executed in a **fresh temporary copy**
+of `benchmark/` with the suite under test. The result is one of `killed`,
+`survived`, `timeout` or `invalid`:
+
+```text
+mutation_score = (killed + timeout) / (killed + survived + timeout)
+```
+
+`invalid` mutants are excluded from both numerator and denominator and are
+reported separately.
+
+Baselines are evaluated in place with the same protocol so the CSV can compare
+`generation_mode=human` against `generation_mode=generated` directly.
+
+### 4.3 Analysis (`pipeline/analyzer.py`)
+
+* `results/evaluation_metrics.csv` — 30 columns, one row per suite.
+* `results/summary_statistics.csv` — per-origin count/mean/median/std/min/max/
+  Q1/Q3/IQR for every metric.
+* `results/correlation_analysis.csv` — Spearman ρ, p-value, n and a
+  `significant_at_0.05` flag for RQ2, RQ3, RQ5a, RQ5b and two robustness
+  checks (test count and assertions per test versus mutation score). Both
+  `generated`-only and `all`-suites scopes are reported.
+* `results/figures/rq2_rq3_coverage_vs_mutation.png` — two-panel scatter
+  (line, branch) with OLS trend lines, per-module colours and ρ/p/n boxes.
+* `results/figures/rq5_complexity_vs_scores.png` — mutation-score box plot by
+  module, complexity-vs-mutation scatter, and mean-outcome bars.
+* `results/figures/rq6_failure_categories.png` — failure taxonomy bar chart
+  with counts and percentages.
+* `results/reports/analysis_report.md` — auto-generated narrative with the RQ
+  verdicts, headline table and embedded figures.
+
+All figures are 300 dpi PNGs on the `Agg` backend, so the pipeline is
+headless-safe.
+
+---
+
+## 5. Command reference
+
+```text
+python run_experiments.py [--mock | --api] [options]
+
+  --mock                     offline deterministic generation (default behaviour)
+  --api                      live generation (requires a provider key)
+  --provider {openai,deepseek,gemini}
+  --model MODEL              provider default: gpt-4o-mini / deepseek-chat / gemini-2.0-flash
+  --api-key KEY              otherwise read from OPENAI_API_KEY / DEEPSEEK_API_KEY /
+                             GEMINI_API_KEY / GOOGLE_API_KEY
+  --runs N                   generated suites per module (default 5)
+  --skip-mutation            skip stage 4 (fast validation)
+  --skip-baseline            do not evaluate the human reference suites
+  --no-figures               statistics only
+  --mutation-timeout SEC     per-mutant budget (default 20)
+  --max-mutants N            cap mutants per suite (debugging)
+  --seed N                   deterministic mock seed
+  --root PATH                project root override
+  --quiet                    final tables only
+```
+
+Useful invocations:
+
+```bash
+# Unit-test the benchmark and baselines directly
+python -m pytest baselines -q
+
+# Coverage of the human reference suites only
+python -m pytest baselines -q --cov=benchmark --cov-branch --cov-report=term-missing
+
+# One module, many runs, no mutation
+python run_experiments.py --mock --runs 10 --skip-mutation --no-figures
+
+# If you edit a benchmark module, re-run the baselines first:
+python -m pytest baselines -q
+```
+
+`--skip-mutation` leaves `mutation_score` empty and writes only the RQ6 figure;
+run without it to populate the RQ2/RQ3/RQ5 panels.
+
+Environment variables understood by the pipeline: `OPENAI_API_KEY`,
+`DEEPSEEK_API_KEY`, `GEMINI_API_KEY`, `GOOGLE_API_KEY`, `PYTHONHASHSEED`
+(forced to `0` for subprocesses), `MPLBACKEND` (forced to `Agg`).
+
+---
+
+## 6. Research questions and where the answer lives
+
+| RQ | Question | Primary artefact | Decision rule used in the report |
+| --- | --- | --- | --- |
+| **RQ1** | How complex is each CPB-6 module? | `complexity_report.json`, stage-1 table | average/max CC per module; confirms the intended low→high gradient |
+| **RQ2** | Does **line coverage** predict mutation score? | `correlation_analysis.csv` row `RQ2`; left panel of `rq2_rq3_...png` | Spearman ρ and p at α = 0.05; ρ ≥ 0.6 = strong support |
+| **RQ3** | Does **branch coverage** predict mutation score better than line coverage? | `RQ3` row; right panel of the same figure | compare ρ(RQ3) with ρ(RQ2) |
+| **RQ4** | How often do generated suites collect and execute? | `collection_success`, `execution_success`; per-origin table | percentages; every collection failure is logged with its error class |
+| **RQ5** | Does **cyclomatic complexity** of the target predict suite outcomes? | `RQ5a` (execution success), `RQ5b` (mutation score); `rq5_...png` | ρ and p; panel 3 shows per-module means of mutation/coverage/execution |
+| **RQ6** | What kinds of failures dominate? | `failure_category` column; `rq6_failure_categories.png` | counts/percentages over `None`, `CollectionError`, `AssertionFailure`, `RuntimeError`, `Timeout` |
+| **RQ7** | So — is coverage a sufficient proxy for test strength? | `analysis_report.md` RQ verdicts + RQ2/RQ3/RQ5b | triangulation: a strong ρ supports the proxy; a weak ρ (or high coverage with low mutation score) rejects it |
+
+Interpretation notes that matter for the write-up:
+
+* A suite can have **100 % coverage and a poor mutation score**; the scatter's
+  vertical spread at `x = 100` is the "coverage is not enough" evidence.
+* Mutation scores are undefined (`NaN`) for suites that do not pass cleanly;
+  the analyzer uses pairwise complete observations and reports `n` explicitly.
+* With five runs per module (`n = 30`) Spearman p-values are indicative; the
+  pipeline reports them rather than hiding them, and `--runs` can be raised.
+
+---
+
+## 7. Reproducibility guarantees
+
+* **Deterministic mock data** — seeded per `(module, run_id, profile)`; reruns
+  produce byte-identical suites.
+* **Deterministic mutation order** — mutants are sorted by `(line, column,
+  replacement)` before evaluation.
+* **Isolated measurements** — every coverage/mutant run uses a temporary copy
+  of `benchmark/`, `PYTHONDONTWRITEBYTECODE=1`, `PYTHONHASHSEED=0`,
+  `--basetemp` inside the sandbox and `-p no:cacheprovider`, so results do not
+  depend on run order or stale caches.
+* **Timeouts are measured, not fatal** — collection (120 s), execution (180 s),
+  coverage (240 s) and per-mutant (20 s) budgets are all configurable; a
+  timeout becomes a `Timeout` observation instead of a crash.
+* **Provenance** — `manifest.json` records the prompt hash, provider, model,
+  token usage and profile for every generated suite.
+
+---
+
+## 8. Troubleshooting
+
+| Symptom | Cause / fix |
+| --- | --- |
+| `ModuleNotFoundError: pipeline` | run from the repository root (`run_experiments.py` is the entry point) |
+| `numpy ... code signature ... different Team IDs` | macOS hardened runtime; use `.venv/bin/python-local` from `setup_env.sh` |
+| `radon` not found on PATH | the analyzer falls back to the radon API, then to a built-in AST counter; check the `source` field in `complexity_report.json` |
+| All mutation scores `NaN` | every generated suite failed; inspect `failure_category` — usually a `broken` collection error |
+| `AnalysisError: no rows with both coverage and mutation score` | run without `--skip-mutation` |
+| Live API 429/5xx | the generator retries twice with exponential backoff and then raises with the provider payload |
+
+---
+
+## 9. Limitations
+
+* The mock corpus is synthetic; use `--api` for publication-grade results.
+* The AST mutator implements a focused operator set (arithmetic, comparison,
+  boolean, negation, boolean literal). It favours determinism and speed over
+  the full mutmut operator zoo.
+* Mutation testing is quadratic-ish: `modules × suites × mutants` pytest
+  processes. On the CPB-6 corpus this is a few minutes; for larger corpora use
+  `--max-mutants` or a persistent mutant cache.
+* `n = 30` per default configuration is small; Spearman estimates should be
+  read as trends, not proof.
+
+---
+
+## 10. License
+
+MIT. The benchmark modules and baseline suites are original work written for
+this study and may be reused with attribution.

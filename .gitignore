@@ -1,0 +1,80 @@
+# ---------------------------------------------------------------------------
+# Python bytecode and tool caches
+# ---------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+.ipynb_checkpoints/
+
+# ---------------------------------------------------------------------------
+# Virtual environments and local toolchains
+# ---------------------------------------------------------------------------
+.venv/
+venv/
+env/
+ENV/
+.deps/
+
+# ---------------------------------------------------------------------------
+# Packaging artifacts
+# ---------------------------------------------------------------------------
+build/
+dist/
+*.egg-info/
+.eggs/
+*.whl
+
+# ---------------------------------------------------------------------------
+# Coverage data (the pipeline emits JSON/CSV reports under results/)
+# ---------------------------------------------------------------------------
+.coverage
+.coverage.*
+coverage.json
+coverage.xml
+htmlcov/
+
+# ---------------------------------------------------------------------------
+# Mutation-testing scratch state (only used for mutmut cross-checks; the
+# bundled AST engine keeps everything in throwaway temp directories)
+# ---------------------------------------------------------------------------
+.mutmut-cache
+mutants/
+
+# ---------------------------------------------------------------------------
+# Secrets and local configuration
+# ---------------------------------------------------------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets.json
+
+# ---------------------------------------------------------------------------
+# OS and editor noise
+# ---------------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*~
+*.orig
+
+# ---------------------------------------------------------------------------
+# Regenerable study outputs
+# ---------------------------------------------------------------------------
+# Generated suites and result tables/figures are deterministic outputs of
+# `python run_experiments.py`. They are tracked by default so that a run is
+# reviewable in history; uncomment the patterns below if you prefer to commit
+# only sources and regenerate the evidence on demand.
+# generated_tests/*_gen_*.py
+# generated_tests/manifest.json
+# results/*.csv
+# results/*.json
+# results/figures/*.png
+# results/reports/*.md
